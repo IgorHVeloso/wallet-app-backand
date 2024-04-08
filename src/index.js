@@ -1,12 +1,17 @@
-const express = require('express')
-const db = require("./db") 
+const express = require('express');
+const db = require("./db");
+const routersCategories = require("./routers/categories");
 
-const app = express()
+const app = express();
+app.use(express.json());
+
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello!');
+  res.send('Olá, essa é a aplicação Wallet App!');
 })
+
+app.use("/categories", routersCategories);
 
 app.get("/categories", (req, res) => {
   db.query("SELECT * FROM categories", (error, response) => {
@@ -22,7 +27,7 @@ app.listen(port, () => {
   db.connect().then(() => {
     console.log("DB connected");
   }).catch(error => {
-    throw new Error(error)
+    throw new Error(error);
   });
   console.log(`Example app listening on port ${port}`);
 });
